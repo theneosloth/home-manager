@@ -72,9 +72,7 @@
   #  /etc/profiles/per-user/neosloth/etc/profile.d/hm-session-vars.sh
   #
   # if you don't want to manage your shell through Home Manager.
-  home.sessionVariables = {
-    EDITOR = "vim";
-  };
+  home.sessionVariables = { EDITOR = "vim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -87,40 +85,53 @@
   };
 
   programs.fish = {
-      enable = true;
+    enable = true;
 
-      plugins = [
-          {
-              name = "foreign-env";
-              src = pkgs.fetchFromGitHub {
-                  owner = "oh-my-fish";
-                  repo = "plugin-foreign-env";
-                  rev = "3ee95536106c11073d6ff466c1681cde31001383";
-                  sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
-              };
-          }
-          {
-              name = "dracula-theme";
-              src = pkgs.fetchFromGitHub {
-                  owner = "dracula";
-                  repo = "fish";
-                  rev = "0e51af5e5346e5d24efabd43fb4631e2a8fd1b70";
-                  sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
-              };
-          }
-      ];
+    plugins = [
+      {
+        name = "foreign-env";
+        src = pkgs.fetchFromGitHub {
+          owner = "oh-my-fish";
+          repo = "plugin-foreign-env";
+          rev = "3ee95536106c11073d6ff466c1681cde31001383";
+          sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
+        };
+      }
+      {
+        name = "dracula-theme";
+        src = pkgs.fetchFromGitHub {
+          owner = "dracula";
+          repo = "fish";
+          rev = "0e51af5e5346e5d24efabd43fb4631e2a8fd1b70";
+          sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
+        };
+      }
+    ];
 
-      shellAbbrs = {
-          gpush = "git push origin HEAD";
-          k = "kubectl";
-          kctx = "kubectx";
-          kval = "kubectl apply --dry-run --validate -f";
-          convert = "units -t";
-      };
+    shellAliases = { cls = "clear"; };
 
-      interactiveShellInit=
-      ''
+    shellAbbrs = {
+      gpush = "git push origin HEAD";
+      k = "kubectl";
+      kctx = "kubectx";
+      kval = "kubectl apply --dry-run --validate -f";
+      convert = "units -t";
+    };
+
+    loginShellInit = ''
+      if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      end
+
+      if test -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh
+        fenv source /nix/var/nix/profiles/default/etc/profile.d/nix.sh
+      end
+      fish_config prompt choose informative_vcs
+      fish_config theme choose Dracula
+    '';
+
+    interactiveShellInit = ''
       direnv hook fish | source
-      '';
+    '';
   };
 }
