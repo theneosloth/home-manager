@@ -33,6 +33,7 @@
     pkgs.babashka
     pkgs.bat
     pkgs.tealdeer
+    pkgs.podman
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -99,7 +100,7 @@
 
     shellAliases = {
       cls = "clear";
-      bb = "rlwrap bb";
+      docker = "podman";
     };
 
     shellAbbrs = {
