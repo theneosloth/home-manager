@@ -87,26 +87,15 @@
   programs.fish = {
     enable = true;
 
-    plugins = [
-      {
-        name = "foreign-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-foreign-env";
-          rev = "3ee95536106c11073d6ff466c1681cde31001383";
-          sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
-        };
-      }
-      {
-        name = "dracula-theme";
-        src = pkgs.fetchFromGitHub {
-          owner = "dracula";
-          repo = "fish";
-          rev = "0e51af5e5346e5d24efabd43fb4631e2a8fd1b70";
-          sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
-        };
-      }
-    ];
+    plugins = [{
+      name = "foreign-env";
+      src = pkgs.fetchFromGitHub {
+        owner = "oh-my-fish";
+        repo = "plugin-foreign-env";
+        rev = "3ee95536106c11073d6ff466c1681cde31001383";
+        sha256 = "vyW/X2lLjsieMpP9Wi2bZPjReaZBkqUbkh15zOi8T4Y=";
+      };
+    }];
 
     shellAliases = {
       cls = "clear";
@@ -119,6 +108,7 @@
       kctx = "kubectx";
       kval = "kubectl apply --dry-run --validate -f";
       convert = "units -t";
+      bb = "rlwrap bb";
     };
 
     loginShellInit = ''
