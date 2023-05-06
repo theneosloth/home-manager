@@ -113,6 +113,7 @@
     };
 
     loginShellInit = ''
+
       if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
       end
@@ -120,11 +121,14 @@
       if test -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh
         fenv source /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       end
+
+      if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
+        fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
+      end
+
       fish_config prompt choose informative_vcs
       fish_config theme choose Dracula
-    '';
 
-    interactiveShellInit = ''
       direnv hook fish | source
     '';
   };
