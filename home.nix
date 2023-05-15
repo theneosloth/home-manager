@@ -34,6 +34,8 @@
     pkgs.bat
     pkgs.tealdeer
     pkgs.podman
+    pkgs.asdf-vm
+    pkgs.units
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -61,6 +63,9 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".tool-versions".text = ''
+    kubectl 1.23.17
+    '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -101,9 +106,12 @@
     shellAliases = {
       cls = "clear";
       docker = "podman";
+      hm = "vim ~/.config/home-manager/home.nix && home-manager switch";
+      bb = "rlwrap bb";
     };
 
     shellAbbrs = {
+      gc = "git checkout";
       gpush = "git push origin HEAD";
       k = "kubectl";
       kctx = "kubectx";
@@ -124,6 +132,10 @@
 
       if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
         fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
+      end
+
+      if test -e $HOME/.nix-profile/share/asdf-vm/asdf.fish
+        source $HOME/.nix-profile/share/asdf-vm/asdf.fish
       end
 
       fish_config prompt choose informative_vcs
